@@ -7,6 +7,8 @@ Sistema de semaforo feito com arduino
 (no video nao tem o sinal vermelho no sinaleiro do pedestre)<br>
 <img src="https://github.com/TrabalhosPUCPR/Semaforo-Arduino/blob/main/circuito_semaforo.png">
 
+[Link para o circuito no TinkerCad](https://www.tinkercad.com/things/fdzh6KZ3tAy)
+
 ### QUESTAO PROPOSTA:
 
 - Extensão do protótipo do sistema de semáforos com a inclusão de dois 
