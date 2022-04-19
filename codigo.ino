@@ -35,9 +35,14 @@ float DelayTotalEntreSinais = 30000; // esse e so o delay TOTAL da troca de sina
 int delayPadrao = 5000; // esse e o valor do delay na hora de ir de um led para o outro
 int delayped1 = 0; // valor adicional do delay quando o pedestre aperta o botao
 int delayped2 = 0;
-
+int ciclo = 1;
+int cicloAcionado1 = 0;// numero do ciclo pra qnd os botoes de pedestres forem precionado e dar uma pausa pra nao prejudicar o fluxo de veiculos
+int cicloAcionado2 = 0; 
 void loop()
 {
+  if(cicloAcionado1 > 0 && ciclo-cicloAcionado1 >= 2){cicloAcionado1 = 0;}
+  if(cicloAcionado2 > 0 && ciclo-cicloAcionado2 >= 2){cicloAcionado2 = 0;} 
+  
   float d1 = pegarEntreMudanca();
   float d2 = DelayTotalEntreSinais - d1;
   Serial.print("DELAY PARA OS PEDESTRES DO SINALEIRO 1 PASSAR: ");
@@ -50,6 +55,7 @@ void loop()
   pisca_led_ped(2, d1+ delayped2); 
   delayped2 = 0;
   SinalVerde(2);
+  ciclo++;
 }
 
 float pegarEntreMudanca(){
@@ -64,14 +70,23 @@ float pegarEntreMudanca(){
   //Serial.println(entreMudanca);
   //Serial.println(analogRead(potenciometro));
 }
-
 void interromperSinal1(){
-  delayped1 = 8000;
-  Serial.println("BOTAO 1 PRECIONADO");
+  if(cicloAcionado1 == 0){
+    cicloAcionado1 = ciclo;
+    delayped1 = 8000;
+    Serial.println("BOTAO 1 PRECIONADO");
+  }else{
+  	 Serial.println("BOTAO 1 SENDO PRECIONADO VARIAS VEZES");
+  }
 }
 void interromperSinal2(){
-  delayped2 = 10000;
-  Serial.println("BOTAO 2 PRECIONADO");
+  if(cicloAcionado2 == 0){
+    cicloAcionado2 = ciclo;
+    delayped2 = 10000;
+  	 Serial.println("BOTAO 2 PRECIONADO");
+  }else{
+  	 Serial.println("BOTAO 2 SENDO PRECIONADO VARIAS VEZES");
+  }
 }
 
 void ligarLedSin(int sinaleiro, int nLed){ // 1 - vermelho, 2 - amarelo, 3 - verde
